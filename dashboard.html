@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <!-- Include Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        /* Sidebar Styles */
+        .sidebar {
+            width: 210px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            transition: width 0.3s;
+            overflow-y: auto; /* Allow scrolling in sidebar if content overflows */
+        }
+
+        .sidebar .logo {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar .logo img {
+            width: 40px;
+            height: auto;
+        }
+
+        .sidebar .logo span {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ecf0f1;
+            margin-top: 10px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px;
+            border-bottom: 1px solid #34495e;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #34495e;
+        }
+
+        .sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden; /* Prevent overall body from scrolling */
+            display: flex;
+        }
+
+        body.collapsed .sidebar {
+            width: 10px;
+        }
+
+        body.collapsed .sidebar .logo,
+        body.collapsed .sidebar h2 {
+            display: none;
+        }
+
+        /* Dashboard container layout */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* 2:1 ratio for wider chart on the left */
+            gap: 30px;
+            padding: 20px;
+            margin-left: 250px;
+            height: 100vh;
+            overflow: auto; /* Allow scrolling for content */
+            flex-grow: 1;
+        }
+
+        /* Box for each chart */
+        .chart-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-height: 300px; /* Ensure a minimum height for each chart */
+        }
+
+        /* Make the chart section on the right side stack vertically */
+        .right-charts {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Title for each chart */
+        .chart-box h3 {
+            margin-bottom: 20px;
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr; /* Stack charts on smaller screens */
+            }
+
+            .right-charts {
+                gap: 10px;
+            }
+        }
+        .chart-button {
+        background-color: #4CAF50; /* Green button color */
+        color: white; /* Text color */
+        border: none; /* Remove border */
+        padding: 10px 20px; /* Button padding */
+        border-radius: 5px; /* Rounded corners */
+        font-size: 18px; /* Font size */
+        text-align: center; /* Center the text */
+        cursor: pointer; /* Pointer cursor on hover */
+        display: block; /* Make the button take full width */
+        width: 100%; /* Make the button expand across the container */
+        margin-bottom: 20px; /* Add space between buttons */
+        transition: background-color 0.3s ease; /* Smooth background color change */
+    }
+
+    .chart-button:hover {
+        background-color: #45a049; /* Darken the button on hover */
+    }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="LOGO1.png" alt="Logo">
+            <span>ARMS</span>
+        </div>
+        <h2>Admin Dashboard</h2>
+        <div id="toggleSidebar" class="sidebar-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul id="menuList">
+            <li id="dashboardMenu" onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </li>
+            
+
+            <li id="farmersMenu" onclick="window.location.href='admin.html'">
+                <i class="fas fa-user-friends"></i> Farmers
+            </li>
+
+            <li id="addNewAccountMenu" onclick="openAddAccountModal()">
+                <i class="fas fa-user-plus"></i> Add New Account
+            </li>
+
+            <li id="distribution-records" onclick="window.location.href='add-distribution.html'">
+                <i class="fas fa-clipboard-list"></i> Distribution Records
+            </li>
+
+             <!-- Farmers Activities Menu -->
+    <li id="farmersActivitiesMenu" onclick="window.location.href='summaryChart.html'">
+        <i class="fas fa-seedling"></i> Farmers Activities
+    </li>
+
+    <!-- User Management Menu -->
+    <li id="userManagementMenu" onclick="window.location.href='user.html'">
+        <i class="fas fa-users-cog"></i> User Management
+    </li>
+
+    <!-- Logout Menu -->
+    <li id="logoutMenu" onclick="window.location.href='index.html'">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </li>
+        </ul>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Left side: Barangay-wise Activity Summary -->
+        <div class="chart-box">
+            <button onclick="window.location.href='farmers-record.html'" class="chart-button">
+                Barangay-wise Activity Summary
+            </button>
+            <canvas id="barangaySummaryChart"></canvas>
+        </div>
+    
+        <!-- Right side: Distribution Summary and Activity Type Summary -->
+        <div class="right-charts">
+            <div class="chart-box">
+                <button onclick="window.location.href='summary.html'" class="chart-button">
+                    Distribution Summary
+                </button>
+                <canvas id="distributionChart"></canvas>
+            </div>
+    
+            <div class="chart-box">
+                <button onclick="window.location.href='farmers-record.html'" class="chart-button">
+                    Activity Type Summary
+                </button>
+                <canvas id="activityTypeChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+          // Sidebar toggle functionality
+          document.getElementById('toggleSidebar').addEventListener('click', () => {
+            document.body.classList.toggle('collapsed');
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const distributionChartCanvas = document.getElementById('distributionChart');
+            const activityTypeChartCanvas = document.getElementById('activityTypeChart');
+            const barangaySummaryChartCanvas = document.getElementById('barangaySummaryChart');
+
+            const distributionBatches = JSON.parse(localStorage.getItem('distributionBatches')) || [];
+            const barangayNames = ["Balacanas", "Dayawan", "Katipunan", "Kimaya", "Poblacion 1", "Poblacion 2", "Poblacion 3", "San Martin", "Tambobong", "Imelda", "Looc"];
+            const activityTypes = ["Land Preparation", "Seeding", "Weeding", "Fertilizing", "Spraying", "Harvesting"];
+            const activityCounts = {};
+
+            barangayNames.forEach(barangay => {
+                const activitiesByBarangay = JSON.parse(localStorage.getItem(`activitiesByBarangay-${barangay}`)) || {};
+                activityCounts[barangay] = {};
+                activityTypes.forEach(type => {
+                    activityCounts[barangay][type] = (activitiesByBarangay[type] && activitiesByBarangay[type].length) ? activitiesByBarangay[type].length : 0;
+                });
+            });
+
+            const activityTypeData = activityTypes.map(type => {
+                let totalCount = 0;
+                barangayNames.forEach(barangay => {
+                    totalCount += activityCounts[barangay][type];
+                });
+                return totalCount;
+            });
+
+            const barangayActivityData = {
+                labels: barangayNames,
+                datasets: activityTypes.map((type, index) => ({
+                    label: type,
+                    data: barangayNames.map(barangay => activityCounts[barangay][type]),
+                    backgroundColor: `rgba(${(index * 40) % 255}, ${(index * 60) % 255}, ${(index * 80) % 255}, 0.6)`,
+                    borderColor: `rgba(${(index * 40) % 255}, ${(index * 60) % 255}, ${(index * 80) % 255}, 1)`,
+                    borderWidth: 1
+                }))
+            };
+
+            const distributionTotals = distributionBatches.reduce((totals, batch) => {
+                batch.distributions.forEach(distribution => {
+                    if (!totals[batch.batchName]) {
+                        totals[batch.batchName] = 0;
+                    }
+                    totals[batch.batchName] += distribution.distributedQuantity;
+                });
+                return totals;
+            }, {});
+
+            const distributionLabels = Object.keys(distributionTotals);
+            const distributionData = Object.values(distributionTotals);
+
+            // Create the Activity Type Summary Chart (Pie)
+            new Chart(activityTypeChartCanvas, {
+                type: 'pie',
+                data: {
+                    labels: activityTypes,
+                    datasets: [{
+                        data: activityTypeData,
+                        backgroundColor: ['#4CAF50', '#FFC107', '#2196F3', '#FF5722', '#009688', '#673AB7'],
+                        hoverBackgroundColor: ['#388E3C', '#FFB300', '#1976D2', '#D32F2F', '#00796B', '#512DA8']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `${context.label}: ${context.raw} activities`
+                            }
+                        }
+                    }
+                }
+            });
+
+           // Create the Barangay-wise Activity Summary Chart (Bar)
+            new Chart(barangaySummaryChartCanvas, {
+                type: 'bar',
+                data: barangayActivityData,
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                // Automatically adjust the scale based on data
+                                max: Math.max(...barangayActivityData.datasets.map(dataset => Math.max(...dataset.data))) + 10,  // Add a buffer
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `${context.dataset.label}: ${context.raw} activities`
+                            }
+                        }
+                    }
+                }
+            });
+
+
+            // Create the Distribution Summary Pie Chart
+            new Chart(distributionChartCanvas, {
+                type: 'pie',
+                data: {
+                    labels: distributionLabels,
+                    datasets: [{
+                        data: distributionData,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw} units`
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

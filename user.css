@@ -1,0 +1,378 @@
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transition: width 0.3s;
+    overflow-y: auto; /* Allow scrolling in sidebar if content overflows */
+}
+
+.sidebar .logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar .logo img {
+    width: 40px;
+    height: auto;
+}
+
+.sidebar .logo span {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ecf0f1;
+    margin-top: 10px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    border-bottom: 1px solid #34495e;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sidebar ul li:hover {
+    background-color: #34495e;
+}
+
+.sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden; /* Prevent overall body from scrolling */
+    display: flex;
+}
+
+body.collapsed .sidebar {
+    width: 60px;
+}
+
+body.collapsed .sidebar .logo,
+body.collapsed .sidebar h2 {
+    display: none;
+}
+
+/* Dashboard container layout */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* 2:1 ratio for wider chart on the left */
+    gap: 30px;
+    padding: 20px;
+    margin-left: 250px;
+    height: 100vh;
+    overflow: auto; /* Allow scrolling for content */
+    flex-grow: 1;
+}
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #EFFDEE;
+    color: #333;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+h1, h2 {    
+    font-weight: normal;
+}
+
+footer {
+    text-align: center;
+}
+
+/* Navigation Bar */
+nav {   
+    background-color: #009688;
+    padding: 0px fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav img.icon {
+    color:#ffffff;  
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+nav .logo {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+        background-color: #343a40;
+
+}
+
+/* Admin Box */
+.admin-box {
+    background-color: rgb(255, 255, 255);
+    margin: 40px 290px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 1200px;
+}
+
+.admin-box h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.admin-box input {
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 400px;
+    font-size: 16px;    
+}
+
+.admin-box input:focus {
+    border-color: #2f3b52;
+    outline: none;
+}
+
+button {
+    background-color: #343a40;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #343a40;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #343a40;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+table td {
+    background-color:       rgba(255, 255, 255, 0.801);
+}
+
+table td button {
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin-right: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+table td button:hover {
+    background-color: #e9f1e9;
+}
+
+table td button:nth-child(2) {
+    background-color: #f44336;
+}
+
+table td button:nth-child(2):hover {
+    background-color: #e53935;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-right: 10px;
+}
+
+/* Sky Green for Pending Users */
+.pending {
+    background-color: #98FF98; 
+    color: #008B8B; /* Sky Blue for text */
+}
+
+/* Approved User Row Style */
+.approved {
+    background-color: #DFFFD6; /* Light green for approved users */
+}
+
+/* Denied User Row Style */
+.denied {
+    background-color: #F44336; /* Red for denied users */
+    color: white; /* White text on red background */
+}
+
+/* Footer */
+.footer3 {
+    background-color: #2f3b52;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer3 .icon2 {
+    width: 40px;
+    height: 40px;
+}
+
+.footer3 .h2-footer {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.footer3 .p-region {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.footer3 .bigx {
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.footer3 .p-gusty {
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .admin-box {
+        width: 100%;
+        padding: 15px;
+    }
+
+    table th,
+    table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    button {
+        padding: 8px 15px;
+    }
+}
+
+/* Sky Green for Pending Users */
+.pending {
+    background-color: #98FF98; /* Light green */
+    color: #008B8B; /* Sky Blue for text */
+}
+
+ /* Sidebar Toggle Button (Burger Icon) */
+ #toggleSidebar {
+    position: fixed;
+    left: 20px;
+    z-index: 101;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white; /* Set the color to white */
+}
+
+.burger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 25px;
+    color: white; /* Set the color to white */
+}
+
+
+.burger-icon span {
+    background-color: #333;
+    height: 5px;
+    width: 100%;
+}
+
+.delete-icon {
+    color: red;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+
+
